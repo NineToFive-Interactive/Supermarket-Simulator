@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.utils.BaseActor;
 import com.mygdx.game.utils.BaseGame;
 import com.mygdx.game.utils.BaseScreen;
@@ -30,24 +31,29 @@ public class SupermarketScreen extends BaseScreen {
     private int naechsteKasse;
     private boolean started;
     float spawnTimer;
-    Label label;
+    Label warenLabel;
+    Label timeLabel;
     String labelText;
+    long startTime;
 
 
     @Override
     public void initialize() {
-        BaseActor background = new BaseActor(0,0, mainStage);
-        background.loadTexture("Background.png");
-        BaseActor.setWorldBounds(background);
 
         random = new Random();
-        naechsteKasse = 0;
+
+        startTime = TimeUtils.millis();
+        started = false;
+        spawnTimer = 0;
+
         //offeneKassen = random.nextInt(1,5);
         offeneKassen = 3;
         kassen = new Kasse[offeneKassen];
-        started = false;
-        //spawnTimer = 5;
-        spawnTimer = 0;
+        naechsteKasse = 0;
+
+        BaseActor background = new BaseActor(0,0, mainStage);
+        background.loadTexture("Background.png");
+        BaseActor.setWorldBounds(background);
 
         for(int i = 0; i<5; i++){
             if(i<offeneKassen) {
@@ -57,22 +63,28 @@ public class SupermarketScreen extends BaseScreen {
             }
         }
 
-        label = new Label("Anzahl Waren: 0", BaseGame.labelStyle);
-        uiStage.addActor(label);
+        warenLabel = new Label("Anzahl Waren: 0", BaseGame.labelStyle);
+
+        timeLabel = new Label("Zeit seit Beginn: 0", BaseGame.labelStyle);
+        timeLabel.setPosition(1,40);
+
+        uiStage.addActor(warenLabel);
+        uiStage.addActor(timeLabel);
     }
 
 
     @Override
     public void update(float deltaTime) {
 
+        long elapsedTime = TimeUtils.timeSinceMillis(startTime);
         spawnTimer -= deltaTime;
 
         if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
             started = !started;
         }
-        label.setText("Anzahl Waren: " + " " + deltaTime);
 
-        //TODO: Kundenspawn
+        warenLabel.setText("Anzahl Waren: " + " " + deltaTime);
+        timeLabel.setText("Laufzeit: " + " " + elapsedTime);
 
         if(started){
             int anzahlNeuerKunden = random.nextInt(1,4);
