@@ -35,7 +35,7 @@ public class SupermarketScreen extends BaseScreen {
     Label statusLabel;
     long startTime;
     long elapsedTime;
-    float spawnTimer;
+    float roundTimer;
 
 
     @Override
@@ -45,7 +45,7 @@ public class SupermarketScreen extends BaseScreen {
 
         startTime = TimeUtils.millis();
         started = false;
-        spawnTimer = 1;
+        roundTimer = 1;
 
         //offeneKassen = random.nextInt(1,5);
         offeneKassen = 3;
@@ -82,7 +82,7 @@ public class SupermarketScreen extends BaseScreen {
     public void update(float deltaTime) {
 
         elapsedTime = TimeUtils.timeSinceMillis(startTime);
-        spawnTimer -= deltaTime;
+        roundTimer -= deltaTime;
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             started = !started;
@@ -100,14 +100,14 @@ public class SupermarketScreen extends BaseScreen {
             int anzahlNeuerKunden = random.nextInt(1,4);
             //int anzahlNeuerKunden = 1;
 
-            if(spawnTimer <=0) {
+            if(roundTimer <=0) {
 
                 for (int i = 0; i < anzahlNeuerKunden; i++) {
                     kassen[naechsteKasse].addKunde(new Kunde(30, 510, mainStage, kassen[naechsteKasse],(float)i+1));
                     setNaechsteKasse();
                 }
 
-                spawnTimer = 5;
+                roundTimer = 5;
             }
 
             //TODO: Abarbeitung an Kassen
