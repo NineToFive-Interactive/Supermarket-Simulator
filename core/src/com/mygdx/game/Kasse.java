@@ -13,7 +13,6 @@ public class Kasse extends BaseActor {
 
         if(open) loadTexture("Kasse.png");
         else loadTexture("GeschlosseneKasse.png");
-
     }
 
     public void addKunde(Kunde k){
@@ -22,7 +21,6 @@ public class Kasse extends BaseActor {
     public void removeKunde(){
         queue.dequeue();
     }
-
     public Kunde getFirstKunde(){
         return (queue.getFirst()!=null) ? queue.getFirst().getData() : null;
     }

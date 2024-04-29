@@ -23,5 +23,4 @@ public class Queue<T> {
     public Listenelement<T> getFirst(){
         return list.getStart();
     }
-
 }

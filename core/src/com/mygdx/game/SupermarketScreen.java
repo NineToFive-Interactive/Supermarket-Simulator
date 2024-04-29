@@ -25,16 +25,17 @@ import java.util.Random;
 
 public class SupermarketScreen extends BaseScreen {
 
-    Random random;
-    private int offeneKassen;
     private Kasse[] kassen;
+    private int offeneKassen;
     private int naechsteKasse;
     private boolean started;
-    float spawnTimer;
+    Random random;
     Label warenLabel;
     Label timeLabel;
-    String labelText;
+    Label statusLabel;
     long startTime;
+    long elapsedTime;
+    float spawnTimer;
 
 
     @Override
@@ -44,7 +45,7 @@ public class SupermarketScreen extends BaseScreen {
 
         startTime = TimeUtils.millis();
         started = false;
-        spawnTimer = 0;
+        spawnTimer = 1;
 
         //offeneKassen = random.nextInt(1,5);
         offeneKassen = 3;
@@ -65,60 +66,70 @@ public class SupermarketScreen extends BaseScreen {
 
         warenLabel = new Label("Anzahl Waren: 0", BaseGame.labelStyle);
 
-        timeLabel = new Label("Zeit seit Beginn: 0", BaseGame.labelStyle);
+        timeLabel = new Label("Laufzeit (in s): 0", BaseGame.labelStyle);
         timeLabel.setPosition(1,40);
+
+        statusLabel = new Label("Status: Not Running!", BaseGame.labelStyle);
+        statusLabel.setPosition(1,940);
 
         uiStage.addActor(warenLabel);
         uiStage.addActor(timeLabel);
+        uiStage.addActor(statusLabel);
     }
 
 
     @Override
     public void update(float deltaTime) {
 
-        long elapsedTime = TimeUtils.timeSinceMillis(startTime);
+        elapsedTime = TimeUtils.timeSinceMillis(startTime);
         spawnTimer -= deltaTime;
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             started = !started;
         }
 
         warenLabel.setText("Anzahl Waren: " + " " + deltaTime);
-        timeLabel.setText("Laufzeit: " + " " + elapsedTime);
+        timeLabel.setText("Laufzeit (in s): " + " " + (int) elapsedTime/1000);
+
+        String status;
+        if(started) status = "Running!";
+        else status = "Not Running!";;
+        statusLabel.setText("Status: " + status);
 
         if(started){
             int anzahlNeuerKunden = random.nextInt(1,4);
             //int anzahlNeuerKunden = 1;
 
             if(spawnTimer <=0) {
-                for (int i = 0; i < anzahlNeuerKunden; i++){
+
+                for (int i = 0; i < anzahlNeuerKunden; i++) {
                     kassen[naechsteKasse].addKunde(new Kunde(30, 510, mainStage, kassen[naechsteKasse],(float)i+1));
                     setNaechsteKasse();
                 }
 
-                for(int i = 0; i < offeneKassen; i++){
+                spawnTimer = 5;
+            }
+
+            //TODO: Abarbeitung an Kassen
+
+            for(int i = 0; i < offeneKassen; i++){
                     Kasse kasse = kassen[i];
                     Kunde kunde = kasse.getFirstKunde();
-                    if (kunde != null) {
+                    if (kunde != null && !kunde.getNeu()) {
                         if(kunde.removeWare()){
                             kasse.removeKunde();
                             kunde.addAction(Actions.after(Actions.removeActor()));
+                        } else {
+                            //TODO:Länge der Queue ermitteln für kunde.walkUp(); oder coole Lösung überlegen.
                         }
+                    } else if (kunde != null && kunde.getNeu()) {
+                        kunde.notNeu();
+                        //TODO:Länge der Queue ermitteln für kunde.walkUp(); oder coole Lösung überlegen.
                     }
-                }
-
-                spawnTimer = 5;
-
             }
+
+
         }
-
-        //TODO: Abarbeitung an Kassen
-
-
-
-
-
-
     }
 
     public int getOffeneKassen(){
