@@ -33,4 +33,8 @@ public class Kasse extends BaseActor {
     public int getKundenAnzahl() {
         return kundenAnzahl;
     }
+
+    public int lastPosition(){
+        return kundenAnzahl+1;
+    }
 }

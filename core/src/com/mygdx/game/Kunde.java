@@ -17,7 +17,7 @@ public class Kunde extends BaseActor {
     private boolean neu;
 
 
-    public Kunde(float posX, float posY, Stage stage, Kasse targetKasse, float sleep) {
+    public Kunde(float posX, float posY, Stage stage, Kasse targetKasse, float sleep, int position) {
         super(posX, posY, stage);
         random = new Random();
         this.anzahlWaren = random.nextInt(1, 51);
@@ -37,7 +37,7 @@ public class Kunde extends BaseActor {
 
 
         addAction(spawn);
-        addAction(walkUpTo(1));
+        addAction(walkUpTo(position));
     }
 
     public boolean removeWare(){

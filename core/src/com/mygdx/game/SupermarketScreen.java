@@ -103,7 +103,7 @@ public class SupermarketScreen extends BaseScreen {
             if(roundTimer <=0) {
 
                 for (int i = 0; i < anzahlNeuerKunden; i++) {
-                    kassen[naechsteKasse].addKunde(new Kunde(30, 510, mainStage, kassen[naechsteKasse],(float)i+1));
+                    kassen[naechsteKasse].addKunde(new Kunde(30, 510, mainStage, kassen[naechsteKasse],(float)i+1,kassen[naechsteKasse].lastPosition()));
                     setNaechsteKasse();
                 }
 
