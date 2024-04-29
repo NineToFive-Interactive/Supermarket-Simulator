@@ -107,12 +107,9 @@ public class SupermarketScreen extends BaseScreen {
                     setNaechsteKasse();
                 }
 
-                roundTimer = 5;
-            }
+                //TODO: Abarbeitung an Kassen
 
-            //TODO: Abarbeitung an Kassen
-
-            for(int i = 0; i < offeneKassen; i++){
+                for(int i = 0; i < offeneKassen; i++){
                     Kasse kasse = kassen[i];
                     Kunde kunde = kasse.getFirstKunde();
                     if (kunde != null && !kunde.getNeu()) {
@@ -126,6 +123,9 @@ public class SupermarketScreen extends BaseScreen {
                         kunde.notNeu();
                         //TODO:Länge der Queue ermitteln für kunde.walkUp(); oder coole Lösung überlegen.
                     }
+                }
+
+                roundTimer = 5;
             }
 
 
