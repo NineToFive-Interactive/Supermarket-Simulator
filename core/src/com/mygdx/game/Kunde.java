@@ -43,7 +43,7 @@ public class Kunde extends BaseActor {
 
         Action go = Actions.sequence(
                 Actions.delay(sleeper),
-                Actions.moveTo(targetKasse.getX(), targetKasse.getY(),2f) );
+                Actions.moveTo(targetKasse.getX()-100, targetKasse.getY()+50,2f) );
         addAction(go);
 
     }

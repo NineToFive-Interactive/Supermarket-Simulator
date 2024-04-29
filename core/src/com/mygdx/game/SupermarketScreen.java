@@ -42,13 +42,19 @@ public class SupermarketScreen extends BaseScreen {
 
         random = new Random();
         naechsteKasse = 0;
-        offeneKassen = random.nextInt(1,5);
+        //offeneKassen = random.nextInt(1,5);
+        offeneKassen = 3;
         kassen = new Kasse[offeneKassen];
         started = false;
         //spawnTimer = 5;
         spawnTimer = 0;
-        for(int i = 0; i<offeneKassen; i++){
-            kassen[i] = new Kasse( 500, 200 * i + 20, mainStage);
+
+        for(int i = 0; i<5; i++){
+            if(i<offeneKassen) {
+                kassen[i] = new Kasse( 750, 200 * i + 20, mainStage, true);
+            } else {
+                 new Kasse( 750, 200 * i + 20, mainStage, false);
+            }
         }
 
         label = new Label("Anzahl Waren: 0", BaseGame.labelStyle);

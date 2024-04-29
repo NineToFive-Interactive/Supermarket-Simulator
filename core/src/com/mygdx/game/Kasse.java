@@ -7,11 +7,13 @@ import com.mygdx.game.utils.Queue;
 public class Kasse extends BaseActor {
 
     private Queue<Kunde> queue;
-    public Kasse(float posX, float posY, Stage stage) {
+    public Kasse(float posX, float posY, Stage stage, boolean open) {
         super(posX, posY, stage);
         this.queue = new Queue<Kunde>();
 
-        loadTexture("Kasse.png");
+        if(open) loadTexture("Kasse.png");
+        else loadTexture("GeschlosseneKasse.png");
+
     }
 
     public void addKunde(Kunde k){
