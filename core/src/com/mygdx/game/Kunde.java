@@ -35,7 +35,6 @@ public class Kunde extends BaseActor {
                 Actions.delay(sleeper),
                 Actions.moveTo(targetKasse.getX()-100, targetKasse.getY()+60,1.5f) );
 
-
         addAction(spawn);
         addAction(walkUpTo(position));
     }

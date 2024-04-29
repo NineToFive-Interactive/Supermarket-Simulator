@@ -4,9 +4,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.utils.BaseActor;
 import com.mygdx.game.utils.Queue;
 
+import java.util.ArrayList;
+
 public class Kasse extends BaseActor {
 
     private Queue<Kunde> queue;
+    private ArrayList<Kunde> kunden;
     private int kundenAnzahl;
 
     public Kasse(float posX, float posY, Stage stage, boolean open) {
@@ -20,12 +23,18 @@ public class Kasse extends BaseActor {
 
     public void addKunde(Kunde k){
         queue.enqueue(k);
+        kunden.add(k);
         kundenAnzahl++;
     }
-    public void removeKunde(){
+    public void removeKunde() {
         queue.dequeue();
+        kunden.removeFirst();
         kundenAnzahl--;
+        for (Kunde k : kunden) {
+            k.walkUp();
+        }
     }
+
     public Kunde getFirstKunde(){
         return (queue.getFirst()!=null) ? queue.getFirst().getData() : null;
     }
