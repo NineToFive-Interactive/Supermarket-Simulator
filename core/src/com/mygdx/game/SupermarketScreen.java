@@ -102,13 +102,7 @@ public class SupermarketScreen extends BaseScreen {
 
             if(roundTimer <=0) {
 
-                for (int i = 0; i < anzahlNeuerKunden; i++) {
-                    kassen[naechsteKasse].addGraphicalKunde(new Kunde(30, 510, mainStage, kassen[naechsteKasse],(float)i+1,kassen[naechsteKasse].lastPosition()));
-                    setNaechsteKasse();
-                }
-
-                //TODO: Abarbeitung an Kassen
-
+                //Abarbeitung an Kassen (logisch)
                 for(int i = 0; i < offeneKassen; i++){
                     Kasse kasse = kassen[i];
                     Kunde kunde = kasse.getFirstKunde();
@@ -116,12 +110,26 @@ public class SupermarketScreen extends BaseScreen {
                         if(kunde.removeWare()){
                             kasse.removeLogicalKunde();
                             kasse.removeGraphicalKunde();
+                            kunde.addAction(Actions.moveBy(400,0,3f));
                             kunde.addAction(Actions.after(Actions.removeActor()));
                         }
-                    } else if (kunde != null && kunde.getNeu()) {
-                        kunde.notNeu();
-                        kasse.addLogicalKunde(kunde);
                     }
+                }
+
+                //Abarbeitung an Kassen (grafisch)
+                for(int i = 0; i < offeneKassen; i++){
+                    Kasse kasse = kassen[i];
+                    for(Kunde k : kasse.kunden){
+                        if(k.getNeu()) {
+                            k.notNeu();
+                            kasse.addLogicalKunde(k);
+                        }
+                    }
+                }
+
+                for (int i = 0; i < anzahlNeuerKunden; i++) {
+                    kassen[naechsteKasse].addGraphicalKunde(new Kunde(30, 510, mainStage, kassen[naechsteKasse],(float)i+1,kassen[naechsteKasse].lastPosition()));
+                    setNaechsteKasse();
                 }
 
                 roundTimer = 5;

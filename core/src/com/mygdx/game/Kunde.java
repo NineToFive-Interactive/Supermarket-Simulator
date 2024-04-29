@@ -61,10 +61,11 @@ public class Kunde extends BaseActor {
     }
 
     public void walkUp() {
-        addAction(Actions.moveBy(100, 0,4f));
+        addAction(Actions.moveBy(110, 0,4f));
     }
 
     public Action walkUpTo(int x) {
         return Actions.after(Actions.moveBy(1100-x*110, 0,2f));
     }
+
 }

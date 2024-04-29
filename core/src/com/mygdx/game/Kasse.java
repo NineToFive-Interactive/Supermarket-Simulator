@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Kasse extends BaseActor {
 
     private Queue<Kunde> queue;
-    private ArrayList<Kunde> kunden;
+    public ArrayList<Kunde> kunden;
     private int kundenAnzahl;
 
     public Kasse(float posX, float posY, Stage stage, boolean open) {
@@ -34,17 +34,17 @@ public class Kasse extends BaseActor {
         kunden.removeFirst();
         kundenAnzahl--;
         for (Kunde k : kunden) {
-            k.walkUp();
+            if(!k.getNeu()) k.walkUp();
         }
     }
+
     public void removeLogicalKunde() {
         queue.dequeue();
     }
 
-
-
-
-
+    public int getPositionOf(Kunde k){
+        return kunden.indexOf(k)+1;
+    }
 
     public Kunde getFirstKunde(){
         return (queue.getFirst()!=null) ? queue.getFirst().getData() : null;
