@@ -30,4 +30,7 @@ public class Kasse extends BaseActor {
         return (queue.getFirst()!=null) ? queue.getFirst().getData() : null;
     }
 
+    public int getKundenAnzahl() {
+        return kundenAnzahl;
+    }
 }
