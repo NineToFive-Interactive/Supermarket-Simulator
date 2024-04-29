@@ -1,5 +1,7 @@
 package com.mygdx.game.utils;
 
+import com.mygdx.game.Kunde;
+
 public class Queue<T> {
     private ZyklListe<T> list = new ZyklListe<>();
 

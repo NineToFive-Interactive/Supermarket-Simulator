@@ -15,7 +15,9 @@ public class Kasse extends BaseActor {
     public Kasse(float posX, float posY, Stage stage, boolean open) {
         super(posX, posY, stage);
         this.queue = new Queue<Kunde>();
+        this.kunden = new ArrayList<>();
         this.kundenAnzahl = 0;
+
 
         if(open) loadTexture("Kasse.png");
         else loadTexture("GeschlosseneKasse.png");
