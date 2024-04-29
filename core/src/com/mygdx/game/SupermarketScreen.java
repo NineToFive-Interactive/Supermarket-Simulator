@@ -103,7 +103,7 @@ public class SupermarketScreen extends BaseScreen {
             if(roundTimer <=0) {
 
                 for (int i = 0; i < anzahlNeuerKunden; i++) {
-                    kassen[naechsteKasse].addKunde(new Kunde(30, 510, mainStage, kassen[naechsteKasse],(float)i+1,kassen[naechsteKasse].lastPosition()));
+                    kassen[naechsteKasse].addGraphicalKunde(new Kunde(30, 510, mainStage, kassen[naechsteKasse],(float)i+1,kassen[naechsteKasse].lastPosition()));
                     setNaechsteKasse();
                 }
 
@@ -114,11 +114,13 @@ public class SupermarketScreen extends BaseScreen {
                     Kunde kunde = kasse.getFirstKunde();
                     if (kunde != null && !kunde.getNeu()) {
                         if(kunde.removeWare()){
-                            kasse.removeKunde();
+                            kasse.removeLogicalKunde();
+                            kasse.removeGraphicalKunde();
                             kunde.addAction(Actions.after(Actions.removeActor()));
                         }
                     } else if (kunde != null && kunde.getNeu()) {
                         kunde.notNeu();
+                        kasse.addLogicalKunde(kunde);
                     }
                 }
 

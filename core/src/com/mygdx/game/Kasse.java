@@ -23,19 +23,28 @@ public class Kasse extends BaseActor {
         else loadTexture("GeschlosseneKasse.png");
     }
 
-    public void addKunde(Kunde k){
-        queue.enqueue(k);
+    public void addGraphicalKunde(Kunde k){
         kunden.add(k);
         kundenAnzahl++;
+     }
+    public void addLogicalKunde(Kunde k){
+        queue.enqueue(k);
     }
-    public void removeKunde() {
-        queue.dequeue();
+    public void removeGraphicalKunde() {
         kunden.removeFirst();
         kundenAnzahl--;
         for (Kunde k : kunden) {
             k.walkUp();
         }
     }
+    public void removeLogicalKunde() {
+        queue.dequeue();
+    }
+
+
+
+
+
 
     public Kunde getFirstKunde(){
         return (queue.getFirst()!=null) ? queue.getFirst().getData() : null;
