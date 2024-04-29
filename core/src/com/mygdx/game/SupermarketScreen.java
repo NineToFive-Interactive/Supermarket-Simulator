@@ -115,13 +115,13 @@ public class SupermarketScreen extends BaseScreen {
                     if (kunde != null && !kunde.getNeu()) {
                         if(kunde.removeWare()){
                             kasse.removeKunde();
+                            kunde.walkUp();
                             kunde.addAction(Actions.after(Actions.removeActor()));
                         } else {
-                            //TODO:Länge der Queue ermitteln für kunde.walkUp(); oder coole Lösung überlegen.
+                            kunde.walkUp();
                         }
                     } else if (kunde != null && kunde.getNeu()) {
                         kunde.notNeu();
-                        //TODO:Länge der Queue ermitteln für kunde.walkUp(); oder coole Lösung überlegen.
                     }
                 }
 
