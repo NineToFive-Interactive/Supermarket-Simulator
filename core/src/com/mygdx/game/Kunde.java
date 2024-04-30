@@ -26,11 +26,18 @@ public class Kunde extends BaseActor {
         this.sleeper = sleep;
         neu = true;
 
-        String[] kunden = new String[3];
+        String[] kunden = new String[10];
         kunden[0] = "Kunde_1.png";
         kunden[1] = "Kunde_2.png";
         kunden[2] = "Kunde_3.png";
-        loadTexture(kunden[random.nextInt(0,3)]);
+        kunden[3] = "Kunde_4.png";
+        kunden[4] = "Kunde_5.png";
+        kunden[5] = "Kunde_6.png";
+        kunden[6] = "Kunde_7.png";
+        kunden[7] = "Kunde_8.png";
+        kunden[8] = "Kunde_9.png";
+        kunden[9] = "Kunde_10.png";
+        loadTexture(kunden[random.nextInt(0,10)]);
 
         addAction(walkUpTo(position, sleep));
     }
