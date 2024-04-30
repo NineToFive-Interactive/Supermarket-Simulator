@@ -30,12 +30,10 @@ public class Kasse extends BaseActor {
     public void addLogicalKunde(Kunde k){
         queue.enqueue(k);
     }
+
     public void removeGraphicalKunde() {
-        kunden.removeFirst();
+        if(kunden.getFirst() != null) kunden.removeFirst();
         kundenAnzahl--;
-        for (Kunde k : kunden) {
-            if(!k.getNeu()) k.walkUp();
-        }
     }
 
     public void removeLogicalKunde() {
@@ -56,5 +54,10 @@ public class Kasse extends BaseActor {
 
     public int lastPosition(){
         return kundenAnzahl+1;
+    }
+    public void allWalkUp(){
+        for (Kunde k : kunden) {
+            k.walkUp();
+        }
     }
 }

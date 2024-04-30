@@ -48,7 +48,7 @@ public class SupermarketScreen extends BaseScreen {
         roundTimer = 1;
 
         //offeneKassen = random.nextInt(1,5);
-        offeneKassen = 3;
+        offeneKassen = 5;
         kassen = new Kasse[offeneKassen];
         naechsteKasse = 0;
 
@@ -110,8 +110,9 @@ public class SupermarketScreen extends BaseScreen {
                         if(kunde.removeWare()){
                             kasse.removeLogicalKunde();
                             kasse.removeGraphicalKunde();
-                            kunde.addAction(Actions.moveBy(400,0,3f));
-                            kunde.addAction(Actions.after(Actions.removeActor()));
+
+                            kunde.goHome();
+                            kasse.allWalkUp();
                         }
                     }
                 }
@@ -128,14 +129,12 @@ public class SupermarketScreen extends BaseScreen {
                 }
 
                 for (int i = 0; i < anzahlNeuerKunden; i++) {
-                    kassen[naechsteKasse].addGraphicalKunde(new Kunde(30, 510, mainStage, kassen[naechsteKasse],(float)i+1,kassen[naechsteKasse].lastPosition()));
+                    kassen[naechsteKasse].addGraphicalKunde(new Kunde(-100, kassen[naechsteKasse].getY()+60, mainStage, kassen[naechsteKasse],(float)i,kassen[naechsteKasse].lastPosition()));
                     setNaechsteKasse();
                 }
 
                 roundTimer = 5;
             }
-
-
         }
     }
 

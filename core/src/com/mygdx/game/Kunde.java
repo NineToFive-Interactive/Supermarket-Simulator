@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.AddAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.mygdx.game.utils.BaseActor;
 
 import java.util.Random;
@@ -31,12 +32,7 @@ public class Kunde extends BaseActor {
         kunden[2] = "Kunde_3.png";
         loadTexture(kunden[random.nextInt(0,3)]);
 
-        Action spawn = Actions.sequence(
-                Actions.delay(sleeper),
-                Actions.moveTo(targetKasse.getX()-100, targetKasse.getY()+60,1.5f) );
-
-        addAction(spawn);
-        addAction(walkUpTo(position));
+        addAction(walkUpTo(position, sleep));
     }
 
     public boolean removeWare(){
@@ -61,11 +57,28 @@ public class Kunde extends BaseActor {
     }
 
     public void walkUp() {
-        addAction(Actions.moveBy(110, 0,4f));
+        float speed = random.nextFloat(1.5f,2.5f);
+        addAction(Actions.moveBy(100, 0,speed));
     }
 
-    public Action walkUpTo(int x) {
-        return Actions.after(Actions.moveBy(1100-x*110, 0,2f));
+    public Action walkUpTo(int x, float sleep) {
+
+        SequenceAction spawn = new SequenceAction();
+                spawn.addAction(Actions.delay(sleep));
+                spawn.addAction(Actions.moveBy(1850-x*100, 0,4.75f-sleep));
+
+        return spawn;
+    }
+
+    public void goHome() {
+
+        SequenceAction leave = new SequenceAction();
+        leave.addAction(Actions.moveBy(180,0,1f));
+        leave.addAction(Actions.after(Actions.rotateBy(-90f,1f)));
+        leave.addAction(Actions.after(Actions.moveBy(0,-1200f,2.75f)));
+        leave.addAction(Actions.after(Actions.removeActor()));
+
+        addAction(leave);
     }
 
 }
