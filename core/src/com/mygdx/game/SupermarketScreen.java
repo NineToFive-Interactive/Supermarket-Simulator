@@ -2,19 +2,10 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.utils.BaseActor;
 import com.mygdx.game.utils.BaseGame;
@@ -30,12 +21,13 @@ public class SupermarketScreen extends BaseScreen {
     private int naechsteKasse;
     private boolean started;
     Random random;
-    Label warenLabel;
+    Label DebugLabel;
     Label timeLabel;
     Label statusLabel;
     long startTime;
     long elapsedTime;
     float roundTimer;
+    private int counter;
 
 
     @Override
@@ -64,7 +56,7 @@ public class SupermarketScreen extends BaseScreen {
             }
         }
 
-        warenLabel = new Label("Anzahl Waren: 0", BaseGame.labelStyle);
+        DebugLabel = new Label("Anzahl Waren: 0", BaseGame.labelStyle);
 
         timeLabel = new Label("Laufzeit (in s): 0", BaseGame.labelStyle);
         timeLabel.setPosition(1,40);
@@ -72,15 +64,22 @@ public class SupermarketScreen extends BaseScreen {
         statusLabel = new Label("Status: Not Running!", BaseGame.labelStyle);
         statusLabel.setPosition(1,940);
 
-        uiStage.addActor(warenLabel);
+        uiStage.addActor(DebugLabel);
         uiStage.addActor(timeLabel);
         uiStage.addActor(statusLabel);
+
+
+
+
+
+
+
     }
 
 
     @Override
     public void update(float deltaTime) {
-
+        counter++;
         elapsedTime = TimeUtils.timeSinceMillis(startTime);
         roundTimer -= deltaTime;
 
@@ -88,13 +87,15 @@ public class SupermarketScreen extends BaseScreen {
             started = !started;
         }
 
-        warenLabel.setText("Anzahl Waren: " + " " + deltaTime);
+        DebugLabel.setText("Anzahl Updates: " + " " + counter);
         timeLabel.setText("Laufzeit (in s): " + " " + (int) elapsedTime/1000);
 
         String status;
         if(started) status = "Running!";
         else status = "Not Running!";;
         statusLabel.setText("Status: " + status);
+
+
 
         if(started){
             int anzahlNeuerKunden = random.nextInt(1,4);
@@ -136,6 +137,7 @@ public class SupermarketScreen extends BaseScreen {
                 roundTimer = 5;
             }
         }
+
     }
 
     public int getOffeneKassen(){

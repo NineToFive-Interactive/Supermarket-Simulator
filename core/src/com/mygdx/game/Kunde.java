@@ -21,7 +21,7 @@ public class Kunde extends BaseActor {
     public Kunde(float posX, float posY, Stage stage, Kasse targetKasse, float sleep, int position) {
         super(posX, posY, stage);
         random = new Random();
-        this.anzahlWaren = random.nextInt(1, 51);
+        this.anzahlWaren = random.nextInt(1, 15);
         this.targetKasse = targetKasse;
         this.sleeper = sleep;
         neu = true;
@@ -87,5 +87,4 @@ public class Kunde extends BaseActor {
 
         addAction(leave);
     }
-
 }
