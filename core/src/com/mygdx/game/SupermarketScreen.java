@@ -40,7 +40,7 @@ public class SupermarketScreen extends BaseScreen {
         roundTimer = 1;
 
         //offeneKassen = random.nextInt(1,5);
-        offeneKassen = 5;
+        offeneKassen = 3;
         kassen = new Kasse[offeneKassen];
         naechsteKasse = 0;
 
@@ -67,13 +67,6 @@ public class SupermarketScreen extends BaseScreen {
         uiStage.addActor(DebugLabel);
         uiStage.addActor(timeLabel);
         uiStage.addActor(statusLabel);
-
-
-
-
-
-
-
     }
 
 
